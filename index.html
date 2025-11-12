@@ -1,48 +1,43 @@
-<!DOCTYPE html>
-<html lang="en">
+<!doctype html>
+<html lang="pt-BR">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Hack & Slash — Mini Game</title>
+    <link rel="stylesheet" href="style.css">
 </head>
+
 <body>
-    <h1>Início</h1>
-    <p>Sejam bem-vindas(os) </p>
-<h2> EcoTech Solutions</h2> 
+    <div class="wrap">
+        <header>
+            <h1>Hack & Slash — Mini Game</h1>
+            <div class="controls">
+                <button id="btnRestart" class="btn">Reiniciar</button>
+                <div class="bar">Pontuação: <span id="score">0</span></div>
+            </div>
+        </header>
 
-   <p>Inovação que preserva o futuro.</p> 
-    
-  <h3>Sobre a Empresa</h3> 
-    <p>A **EcoTech Solutions** é uma empresa de tecnologia sustentável que desenvolve soluções inovadoras para promover a economia circular e reduzir o impacto ambiental. Nosso foco é criar produtos e serviços que ajudem empresas e consumidores a adotar práticas mais ecológicas, aproveitando as tecnologias mais avançadas de forma responsável. Estamos comprometidos com a criação de um futuro mais verde e sustentável, sem abrir mão da inovação.
-    </p>
-   <h3>Missão</h3>
-   <p> Desenvolver tecnologias que integrem eficiência energética e sustentabilidade, promovendo um mundo mais limpo e saudável para as futuras gerações.</p> Desenvolver tecnologias que integrem eficiência energética e sustentabilidade, promovendo um mundo mais limpo e saudável para as futuras gerações.
-</p>
-   <p> Ser líder global em soluções tecnológicas sustentáveis até 2030, transformando a maneira como as empresas e os consumidores interagem com o meio ambiente.
-   </p>
+        <div class="game-card">
+            <canvas id="gameCanvas" width="1100" height="620"></canvas>
 
-    
-       <h3>Valores</h3> 
-<p>    1. Sustentabilidade: Acreditamos que a preservação do planeta é nossa responsabilidade e buscamos soluções que equilibram progresso e respeito ao meio ambiente.
-</p>    <p>2. Inovação: Estamos sempre em busca de novas tecnologias e abordagens para criar soluções mais eficientes e eficazes.</p>
-<p>    3. Compromisso: Nosso trabalho é guiado por um compromisso com a qualidade, ética e com as necessidades dos nossos clientes.
-</p>    
-    
-    
+            <div class="hud">
+                <div class="left">
+                    <div class="bar">Vida: <span id="hp">100</span></div>
+                    <div class="bar">Wave: <span id="wave">1</span></div>
+                </div>
+                <div class="right">
+                    <div class="bar">Melhor: <span id="best">0</span></div>
+                </div>
+            </div>
 
-    
- </p>
+            <div class="help">Controles: <strong>WASD</strong> mover • <strong>Mouse</strong> mira •
+                <strong>Clique</strong> atacar • <strong>R</strong> reiniciar</div>
+        </div>
+    </div>
 
- <img src="data:image/jpeg;base64,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"
-<ul>
-
-    <h2>    Contato:
-    </h2>
-
-    <li>Telefone:** (11) 98765-4321</li>
-
-
-</ul>
-
+    <!-- script carregado no final garante que o canvas existe -->
+    <script src="script.js"></script>
 </body>
+
 </html>
